@@ -1,5 +1,7 @@
+using Auth_API.Contracts;
 using Auth_API.Data;
 using Auth_API.Extensions;
+using Auth_API.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 ConfigurationManager configuration = builder.Configuration;
 
+
+
+
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("ConnStr"));
@@ -21,6 +26,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 
 // Adding Authentication
