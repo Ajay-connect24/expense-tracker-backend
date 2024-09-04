@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth-API", "Auth-API\Auth-API.csproj", "{2DE02680-2824-4A0D-9865-99A17C715D9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth-API", "Auth-API\Auth-API.csproj", "{2DE02680-2824-4A0D-9865-99A17C715D9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{66D64088-962C-4D06-9500-43BEF12157CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E531FFE4-3A97-4F80-B86B-1D8A55BD6244}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{2061636A-7D15-4B72-850D-345B3E638E5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +24,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2DE02680-2824-4A0D-9865-99A17C715D9B} = {2061636A-7D15-4B72-850D-345B3E638E5A}
+		{2061636A-7D15-4B72-850D-345B3E638E5A} = {66D64088-962C-4D06-9500-43BEF12157CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65D8A5BF-6938-4BD1-AD52-682FA7D63ABB}

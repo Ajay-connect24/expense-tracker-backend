@@ -9,12 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 ConfigurationManager configuration = builder.Configuration;
-
-
-
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
@@ -29,15 +24,13 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
-
-// Adding Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-// Adding Jwt Bearer
+
 .AddJwtBearer(options =>
 {
     options.SaveToken = true;
@@ -51,7 +44,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
 });
-
 
 
 var app = builder.Build();
@@ -70,5 +62,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

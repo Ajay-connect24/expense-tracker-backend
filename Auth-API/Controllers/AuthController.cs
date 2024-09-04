@@ -12,11 +12,11 @@ namespace Auth_API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _authRepository;
-
         public AuthController(IAuthRepository authRepository)
         {
             _authRepository = authRepository;
         }
+
 
         [HttpPost]
         [Route("register")]
@@ -24,30 +24,25 @@ namespace Auth_API.Controllers
         {
             var registerModel = registerDto.Adapt<Register>();
             var response = await _authRepository.RegisterAsync(registerModel);
-
-            if (response.Status == Constants.ErrorStatus) {
+            if (response.Status == Constants.ErrorStatus)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
-
             return Ok(response);
-            
         }
+
 
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
         {
-          
             var loginModel = loginDto.Adapt<Login>();
-
             var token = await _authRepository.LoginAsync(loginModel);
-
             if (token == null)
             {
                 return Unauthorized(new Response { Status = Constants.ErrorStatus, Message = Constants.InvalidLoginAttemptMessage });
             }
-
-            return Ok( token );
+            return Ok(token);
         }
     }
 }

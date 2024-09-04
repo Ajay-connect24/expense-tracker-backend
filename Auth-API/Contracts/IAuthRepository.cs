@@ -7,7 +7,5 @@ namespace Auth_API.Contracts
     {
         Task<Response> RegisterAsync(Register registerModel);
         Task<string> LoginAsync(Login loginModel);
-        
-
     }
 }
