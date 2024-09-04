@@ -1,4 +1,5 @@
 using Auth_API.Data;
+using Auth_API.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,8 +49,15 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
 
-
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+app.ConfigureExceptionHandler(logger);
 
 app.UseAuthentication();
 app.UseAuthorization();
