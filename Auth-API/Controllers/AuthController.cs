@@ -1,4 +1,6 @@
-﻿using Auth_API.Entities.Models;
+﻿using Auth_API.Entities.DataTransferObjects;
+using Auth_API.Entities.Models;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -26,8 +28,9 @@ namespace Auth_API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] Register model)
+        public async Task<IActionResult> Register([FromBody] RegisterDTO registerDto)
         {
+            var model = registerDto.Adapt<Register>();
             var userExists = await _userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
@@ -56,8 +59,9 @@ namespace Auth_API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] Login model)
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
         {
+            var model = loginDto.Adapt<Login>();
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -82,12 +86,12 @@ namespace Auth_API.Controllers
             return Unauthorized();
         }
 
-        [Authorize(Roles = UserRoles.User)]
-        [HttpGet("test")]
-        public async Task<IActionResult> Test()
-        {
-            return Ok(_userManager.Users.ToList());
-        }
+        //[Authorize(Roles = UserRoles.User)]
+        //[HttpGet("test")]
+        //public async Task<IActionResult> Test()
+        //{
+        //    return Ok(_userManager.Users.ToList());
+        //}
 
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
