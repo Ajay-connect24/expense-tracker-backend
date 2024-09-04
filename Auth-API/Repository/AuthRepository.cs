@@ -1,5 +1,5 @@
-﻿using Auth_API.Contracts;
-using Auth_API.Entities.DataTransferObjects;
+﻿using Auth_API.AppConstants;
+using Auth_API.Contracts;
 using Auth_API.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +11,7 @@ namespace Auth_API.Repository
 {
     public class AuthRepository : IAuthRepository
     {
+        
        
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -24,6 +25,7 @@ namespace Auth_API.Repository
 
         public async  Task<string> LoginAsync(Login model)
         {
+            
             
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -51,7 +53,7 @@ namespace Auth_API.Repository
 
             var userExists = await _userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
-                return new Response { Status = "Error", Message = "User already exists!" };
+                return new Response { Status = Constants.ErrorStatus, Message = Constants.UserAlreadyExistsMessage };
             IdentityUser user = new()
             {
                 Email = model.Email,
@@ -61,7 +63,7 @@ namespace Auth_API.Repository
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
-                return new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." };
+                return new Response { Status = Constants.ErrorStatus, Message = Constants.UserCreationFailedMessage };
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
             {
@@ -72,7 +74,7 @@ namespace Auth_API.Repository
 
 
 
-            return new Response { Status = "Success", Message = "User created successfully!" };
+            return new Response { Status = Constants.SuccessStatus, Message = Constants.UserCreatedSuccessfullyMessage };
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)

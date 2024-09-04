@@ -1,15 +1,9 @@
-﻿using Auth_API.Contracts;
+﻿using Auth_API.AppConstants;
+using Auth_API.Contracts;
 using Auth_API.Entities.DataTransferObjects;
 using Auth_API.Entities.Models;
 using Mapster;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Auth_API.Controllers
 {
@@ -31,7 +25,7 @@ namespace Auth_API.Controllers
             var registerModel = registerDto.Adapt<Register>();
             var response = await _authRepository.RegisterAsync(registerModel);
 
-            if (response.Status == "Error") {
+            if (response.Status == Constants.ErrorStatus) {
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
 
@@ -50,7 +44,7 @@ namespace Auth_API.Controllers
 
             if (token == null)
             {
-                return Unauthorized(new { Status = "Error", Message = "Invalid login attempt." });
+                return Unauthorized(new Response { Status = Constants.ErrorStatus, Message = Constants.InvalidLoginAttemptMessage });
             }
 
             return Ok( token );
@@ -58,10 +52,3 @@ namespace Auth_API.Controllers
     }
 }
 
-
-//[Authorize(Roles = UserRoles.User)]
-//[HttpGet("test")]
-//public async Task<IActionResult> Test()
-//{
-//    return Ok(_userManager.Users.ToList());
-//}
