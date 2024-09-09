@@ -1,11 +1,8 @@
 ﻿using ExpensesAPI.Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace ExpensesAPI.Data
 {
-    
     public class ApplicationDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
@@ -18,16 +15,24 @@ namespace ExpensesAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            // Configure the one-to-many relationship between User and Transaction
             modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.User)
-                .WithMany(u => u.Transactions)
-                .HasForeignKey(t => t.UserId);
+                .HasOne(t => t.User) // Each transaction has one user
+                .WithMany(u => u.Transactions) // A user can have many transactions
+                .HasForeignKey(t => t.UserId) // Foreign key in Transaction
+                .OnDelete(DeleteBehavior.Cascade); // Optional: Set to cascade delete if needed
 
+            // Configure the one-to-many relationship between Category and Transaction
             modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Category)
-                .WithMany(c => c.Transactions)
-                .HasForeignKey(t => t.CategoryId);
+                .HasOne(t => t.Category) // Each transaction has one category
+                .WithMany(c => c.Transactions) // A category can have many transactions
+                .HasForeignKey(t => t.CategoryId) // Foreign key in Transaction
+                .OnDelete(DeleteBehavior.Cascade); // Optional: Set to cascade delete if needed
+
+            // Configure the decimal property 'Amount' in Transaction
+            modelBuilder.Entity<Transaction>()
+                .Property(t => t.Amount)
+                .HasPrecision(18, 2); // Specify precision and scale for decimal type
         }
     }
 }
