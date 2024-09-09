@@ -5,7 +5,6 @@ namespace ExpensesAPI.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
@@ -15,13 +14,6 @@ namespace ExpensesAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure the one-to-many relationship between User and Transaction
-            modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.User) // Each transaction has one user
-                .WithMany(u => u.Transactions) // A user can have many transactions
-                .HasForeignKey(t => t.UserId) // Foreign key in Transaction
-                .OnDelete(DeleteBehavior.Cascade); // Optional: Set to cascade delete if needed
-
             // Configure the one-to-many relationship between Category and Transaction
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Category) // Each transaction has one category

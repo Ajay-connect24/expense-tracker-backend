@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpensesAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240909102840_initial")]
+    [Migration("20240909132028_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -73,30 +73,7 @@ namespace ExpensesAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("ExpensesAPI.Entities.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ExpensesAPI.Entities.Models.Transaction", b =>
@@ -107,23 +84,10 @@ namespace ExpensesAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpensesAPI.Entities.Models.User", "User")
-                        .WithMany("Transactions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ExpensesAPI.Entities.Models.Category", b =>
-                {
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("ExpensesAPI.Entities.Models.User", b =>
                 {
                     b.Navigation("Transactions");
                 });

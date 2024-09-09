@@ -11,8 +11,6 @@ namespace ExpensesAPI.Entities.Models
         public decimal Amount { get; set; }
         public int CategoryId { get; set; } 
         public bool IsIncome { get; set; }
-
-        public virtual User User { get; set; } 
         public virtual Category Category { get; set; }
 
     }
