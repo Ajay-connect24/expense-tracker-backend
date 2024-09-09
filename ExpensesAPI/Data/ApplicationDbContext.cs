@@ -25,6 +25,21 @@ namespace ExpensesAPI.Data
             modelBuilder.Entity<Transaction>()
                 .Property(t => t.Amount)
                 .HasPrecision(18, 2); // Specify precision and scale for decimal type
+
+            // Seed predefined categories using PredefinedCategories
+            SeedPredefinedCategories(modelBuilder);
+        }
+
+        private void SeedPredefinedCategories(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = PredefinedCategories.Food, UserId = 0 },
+                new Category { Id = 2, Name = PredefinedCategories.Entertainment, UserId = 0 },
+                new Category { Id = 3, Name = PredefinedCategories.Transportation, UserId = 0 },
+                new Category { Id = 4, Name = PredefinedCategories.Utilities, UserId = 0 },
+                new Category { Id = 5, Name = PredefinedCategories.Shopping, UserId = 0 },
+                new Category { Id = 6, Name = PredefinedCategories.Other, UserId = 0 }
+            );
         }
     }
 }

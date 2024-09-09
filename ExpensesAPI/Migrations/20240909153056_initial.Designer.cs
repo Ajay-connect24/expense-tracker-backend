@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpensesAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240909132028_initial")]
+    [Migration("20240909153056_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -43,6 +43,44 @@ namespace ExpensesAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Food",
+                            UserId = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Entertainment",
+                            UserId = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Transportation",
+                            UserId = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Utilities",
+                            UserId = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Shopping",
+                            UserId = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Other",
+                            UserId = 0
+                        });
                 });
 
             modelBuilder.Entity("ExpensesAPI.Entities.Models.Transaction", b =>
