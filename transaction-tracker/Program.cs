@@ -16,6 +16,7 @@ builder.Services.AddDbContext<TransactionDbContext>(options =>
 });
 
 builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<IIncomeRepository, IncomeRepository>();
 
 // Add services to the container.
 
@@ -46,6 +47,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
