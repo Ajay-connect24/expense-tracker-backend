@@ -1,4 +1,14 @@
+using transaction_tracker.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigurationManager configuration = builder.Configuration;
+
+builder.Services.AddDbContext<TransactionDbContext>(options =>
+{
+    options.UseSqlServer(configuration.GetConnectionString("ConnStr"));
+});
 
 // Add services to the container.
 
