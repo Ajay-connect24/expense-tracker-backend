@@ -12,7 +12,7 @@ using transaction_tracker.Data;
 namespace transaction_tracker.Migrations
 {
     [DbContext(typeof(TransactionDbContext))]
-    [Migration("20240910115545_initial")]
+    [Migration("20240910171726_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -63,8 +63,9 @@ namespace transaction_tracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Category")
                         .IsRequired()

@@ -20,6 +20,10 @@ namespace transaction_tracker.Data
                 .HasPrecision(18, 2); // Set precision and scale for decimal
 
             // You can add additional configurations for other entities here
+
+            modelBuilder.Entity<Income>()
+                .Property(e => e.Amount)
+                .HasPrecision(18, 2);
         }
     }
 }
