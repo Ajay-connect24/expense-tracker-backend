@@ -20,7 +20,7 @@ namespace transaction_tracker.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<List<TransactionDto>> GetLast10Transactions(Guid userId)
+        public async Task<List<TransactionWithIdDto>> GetLast10Transactions(Guid userId)
         {
             var expenses = await _dbContext.Expenses
                 .Where(e => e.UserId == userId)
@@ -28,7 +28,7 @@ namespace transaction_tracker.Repository
                 .Take(10)
                 .ToListAsync();
 
-            return expenses.Adapt<List<TransactionDto>>();
+            return expenses.Adapt<List<TransactionWithIdDto>>();
         }
 
         public async Task<decimal> GetTotalMonthlyExpense(Guid userId, int month, int year)

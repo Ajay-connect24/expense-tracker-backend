@@ -5,7 +5,7 @@ namespace transaction_tracker.Contracts
 {
     public interface IExpenseRepository
     {
-        Task<List<TransactionDto>> GetLast10Transactions(Guid userId);
+        Task<List<TransactionWithIdDto>> GetLast10Transactions(Guid userId);
         Task<decimal> GetTotalMonthlyExpense(Guid userId, int month, int year);
         Task<Dictionary<string, decimal>> GetMonthlyExpenses(Guid userId);
         Task<Dictionary<int, decimal>> GetDailyExpenses(Guid userId, int month, int year);
