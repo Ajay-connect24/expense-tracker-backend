@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace transaction_tracker.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ExpenseController : ControllerBase
@@ -140,7 +142,16 @@ namespace transaction_tracker.Controllers
 
         private Guid GetUserIdFromClaims()
         {
+            // Find the NameIdentifier claim
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            // Check if the claim exists and has a value
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+            {
+                throw new InvalidOperationException("User ID claim not found.");
+            }
+
+            // Parse and return the claim value as a Guid
             return Guid.Parse(userIdClaim.Value);
         }
     }
