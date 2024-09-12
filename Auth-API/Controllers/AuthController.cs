@@ -42,7 +42,7 @@ namespace Auth_API.Controllers
             {
                 return Unauthorized(new Response { Status = Constants.ErrorStatus, Message = Constants.InvalidLoginAttemptMessage });
             }
-            return Ok(token);
+            return Ok(new { token = token });
         }
     }
 }
